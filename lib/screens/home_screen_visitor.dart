@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/rendering.dart';
 import 'package:p2p/constants/color_constant.dart';
-import 'package:p2p/constants/style_constant.dart';
+// import 'package:p2p/constants/style_constant.dart';
 import 'package:p2p/screens/signin.dart';
 import 'package:p2p/screens/sign_up.dart';
+import 'package:p2p/screens/ketentuan_pengguna.dart';
+import 'package:p2p/screens/informasi_layanan_produk.dart';
+import 'package:p2p/screens/pengajuan_pendanaan/pengajuan_pendanaan.dart';
 
 class HomeScreenVisitor extends StatefulWidget {
   @override
@@ -129,6 +133,11 @@ class _HomeScreenVisitor extends State<HomeScreenVisitor> {
                           color: primary,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(30))),
+                      child: Center(
+                          child: Container(
+                        padding: EdgeInsets.all(20),
+                        child: Image.asset("assets/images/Logo.png"),
+                      )),
                     ),
                     Align(
                         alignment: Alignment.centerLeft,
@@ -140,7 +149,13 @@ class _HomeScreenVisitor extends State<HomeScreenVisitor> {
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         )),
-                    CardWithImg(pathFile: "assets/images/user_agreement.jpg"),
+                    CardWithImg(
+                      pathFile: "assets/images/user_agreement.jpg",
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => KetentuanPengguna()));
+                      },
+                    ),
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
@@ -151,13 +166,12 @@ class _HomeScreenVisitor extends State<HomeScreenVisitor> {
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         )),
-                    Container(
-                      margin: const EdgeInsets.only(left: 20, right: 20),
-                      height: 150,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 248, 151, 232),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(30))),
+                    CardWithImg(
+                      pathFile: "assets/images/informasi_produk.jpg",
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => InformasiLayananProduk()));
+                      },
                     ),
                     Align(
                         alignment: Alignment.centerLeft,
@@ -170,60 +184,49 @@ class _HomeScreenVisitor extends State<HomeScreenVisitor> {
                           ),
                         )),
                     SizedBox(
-                      height: 100,
+                      height: 120,
                       child: ListView(
                         padding: EdgeInsets.only(left: 20, right: 20),
                         scrollDirection: Axis.horizontal,
                         physics: BouncingScrollPhysics(),
                         children: [
-                          Container(
-                            height: 80,
-                            width: 80,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: primary,
-                            ),
+                          ProfileImg(
+                              pathFile: "assets/images/Foto_Profil.png",
+                              nama: "Pengusaha Bawang"),
+                          ProfileImg(
+                              pathFile: "assets/images/Foto_Profil2.png",
+                              nama: "Pengusaha Sawit"),
+                          ProfileImg(
+                              pathFile: "assets/images/Foto_Profil3.png",
+                              nama: "Pedagang Kelontong"),
+                          ProfileImg(
+                            pathFile: "assets/images/Foto_Profil4.png",
+                            nama: "Pedagang Kali Lima",
                           ),
-                          Container(
-                            height: 80,
-                            width: 80,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: primary,
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            width: 80,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: primary,
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            width: 80,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: primary,
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            width: 80,
-                            margin: EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: primary,
-                            ),
+                          ProfileImg(
+                            pathFile: "assets/images/Foto_Profil5.png",
+                            nama: "Mahasiswa",
                           ),
                         ],
                       ),
-                    )
+                    ),
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 20, right: 20),
+                          padding: const EdgeInsets.all(9),
+                          child: const Text(
+                            "Pengajuan Dana",
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        )),
+                    CardWithImg(
+                      pathFile: "assets/images/pengajuan_dana.jpg",
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PengajuanPendanaan()));
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -235,14 +238,57 @@ class _HomeScreenVisitor extends State<HomeScreenVisitor> {
   }
 }
 
-class CardWithImg extends StatelessWidget {
+class ProfileImg extends StatelessWidget {
   final String pathFile;
-  
-  CardWithImg({required this.pathFile});
+  final String nama;
+
+  ProfileImg({required this.pathFile, required this.nama});
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 20),
+      child: Column(
+        children: [
+          Container(
+            height: 80,
+            width: 80,
+            decoration: BoxDecoration(
+              border: Border.all(color: primary, width: 4.0),
+              image: DecorationImage(
+                  image: AssetImage(pathFile), fit: BoxFit.cover),
+              shape: BoxShape.circle,
+              color: primary,
+            ),
+          ),
+          SizedBox(height: 5),
+          Container(
+              width: 80,
+              child: Center(
+                child: Wrap(
+                  children: [
+                    Text(
+                      nama,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
+                    )
+                  ],
+                ),
+              ))
+        ],
+      ),
+    );
+  }
+}
 
+class CardWithImg extends StatelessWidget {
+  final String pathFile;
+  final VoidCallback onTap;
+
+  CardWithImg({required this.pathFile, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20),
       height: 150,
@@ -282,7 +328,7 @@ class CardWithImg extends StatelessWidget {
               child: Container(
                   margin: const EdgeInsets.only(right: 30, bottom: 20),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: onTap,
                     child: const Text(
                       'Detail',
                       style: TextStyle(
